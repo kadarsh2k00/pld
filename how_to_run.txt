@@ -1,0 +1,42 @@
+1.Getting Started
+These instructions will get you a copy of the project up and running on your local machine for testing purposes.
+
+2.Prerequisites
+You will need API keys, which you can receive by signing up in the Plaid Dashboard.
+https://dashboard.plaid.com/team/keys
+
+3.Installing
+Open terminal in project folder to creat and run virtual environment
+python -m venv ./venv
+venv\scripts\activate.bat
+
+4.Install Dependencies
+pip install -r requirements.txt
+
+5.Create a database and write the credentials in settings.py file of moneymanager app
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'NAME OF DATABASE',
+        'USER': 'postgres',
+        'PASSWORD': 'PASSWORD',
+        'HOST': 'localhost'
+    }
+ }
+
+6.Now make migrations to create schema in database
+python manage.py makemigrations
+python manage.py migrate
+
+7.To use admin panel you need to create superuser
+python manage.py createsuperuser
+
+8.Enter the Plaid API credentials in secret_keys.py file
+PLAID_CLIENT_ID = 'YOUR CLIENT ID'
+PLAID_ENV = 'PLAID ENVIRONMENT'
+PLAID_SECRET = 'YOUR SECRET KEY'
+
+9.To run the program in local server use the following command
+python manage.py runserver
+
+10.Run local server at http://localhost:8000 or http://127.0.0.1:8000/
