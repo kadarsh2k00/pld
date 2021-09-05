@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {% load static %} {% block title %}
+  {% endblock %}
+</head>
+<body>
+  {% block content %} {% if all_transactions %}
+  <div class="boxing">
+  <table>
+    <tr class="transaction-list-header">
+      <th>DATE</th>
+      <th>NAME</th>
+      <th>AMOUNT</th>
+      <th>CATEGORY</th>
+      <th>ACCOUNT</th>
+    </tr>
+    {% for transaction in page_obj %}
+    <tr class="transaction-row" id="trans-id" data-transid="{{transaction.id}}">
+      <td class="transaction-td-date">{{transaction.date}}</td>
+      <td class="transaction-td-name">{{transaction.name}}</td>
+      <td class="transaction-td-amount">{{transaction.amount}}</td>
+      <td class="transaction-td-category">{{transaction.category.1}}</td>
+      <td class="transaction-td-account">
+        {{transaction.account.official_name}}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+  <div class="pagination">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+      <a href="?page=1">&laquo; FIRST</a>&nbsp;
+      <a href="?page={{ page_obj.previous_page_number }}">PREVIOUS</a>
+      {% endif %}
+      &nbsp;&nbsp;
+      <span class="current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+      &nbsp;&nbsp;
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">NEXT</a>&nbsp;
+      <a href="?page={{ page_obj.paginator.num_pages }}">LAST &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+  {% else %} {% if error %}
+  <p>{{ error.display_message }}</p>
+  {% endif %}
+  <p>No transactions have been pulled yet.</p>
+  {% endif %}
+  <script src="{% static 'myfinance/plaid.js' %}"></script>
+  {% endblock %}
+</body>

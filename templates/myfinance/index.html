@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {% load static %}
+</head>
+<body>
+  {% block content %}
+  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+  {% if user.is_authenticated %}
+    <br>
+    <br>
+    <div class="account">
+      <h2 class="text-center"><b>ACCOUNTS</b></h2>
+        <button id="link-button"><b>LINK ACCOUNTS</b></button>
+        {% if accounts %}
+        <ul>
+          {% for account in accounts %}
+          <li>{{account.official_name}} - {{account.balances.current}}</li>
+          {% endfor %}
+        </ul>
+        {% else %} {% if error %}
+        <p>{{ error.display_message }}</p>
+        {% endif %}
+        {% endif %}
+        <br><br>
+      <a class="refresh" href="{% url 'myfinance:refresh-accounts' %}"><b>REFRESH ACCOUNTS</b></a>
+    </div>
+
+    <div class="account">
+      <h2 class="text-center">TRANSACTIONS</h2>
+      <br>
+      {% if latest_transactions %}
+      <table>
+        <tr class="transaction-list-header">
+          <th>DATE</th>
+          <th>NAME</th>
+          <th>AMOUNT</th>
+          <th>CATEGORY</th>
+          <th>ACCOUNT</th>
+        </tr>
+        {% for transaction in latest_transactions %}
+        <tr class="transaction-row">
+          <td class="transaction-td-date">{{transaction.date}}</td>
+          <td class="transaction-td-name">{{transaction.name}}</td>
+          <td class="transaction-td-amount">{{transaction.amount}}</td>
+          <td class="transaction-td-category">{{transaction.category.1}}</td>
+          <td class="transaction-td-account">{{transaction.account.official_name}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      <br>
+      <a class="refresh" href="{% url 'myfinance:transactions' %}"><b>ALL TRANSACTIONS</b></a>
+      <a class="refresh" href="{% url 'myfinance:get-transactions' %}"><b>REFRESH TRANSACTIONS</b></a>
+      {% else %} {% if error %}
+      <p>{{ error.display_message }}</p>
+      {% endif %}
+      {% if not accounts %}
+        <p class="text-center">LINK ACCOUNT FOR TRANSACTIONS</p>
+      {% else %}
+        <br>
+        <a class="refresh" href="{% url 'myfinance:get-transactions' %}"><b>REFRESH TRANSACTIONS</b></a>
+      {% endif %}
+      {% endif %}
+    </div>
+  {% else %}
+  <h1 class="text-center"><b>WELCOME TO MONEY MANAGER</b></h1>
+  <br>
+  <h2 class="text-center">Get all your transactions at one place!</h2>
+  <a href="{% url 'myfinance:log-in-form' %}">
+    <img class="authentication2" src="{% static 'myfinance/login.png' %}" alt="LogIn">
+  </a>
+  <a href="{% url 'myfinance:signup' %}">
+    <img class="authentication2" src="{% static 'myfinance/signin.png' %}" alt="SignUp">
+  </a>
+  {% endif %}
+  <script src="{% static 'myfinance/plaid.js' %}"></script>
+  {% endblock %}
+</body>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  {% block content %}
+  {% load static %}
+  {% if not user.is_authenticated %}
+    <form action="{% url 'myfinance:log-in' %}" method="POST">
+      <div class="imgcontainer">
+        <img src="{% static 'myfinance/avtar.png' %}" alt="Avatar" class="avatar">
+      </div>
+      {% csrf_token %}
+      <div class="container">
+        <label for="username"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="username" required>
+        <br>
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" required>
+
+        <button type="submit"><b>Log In</b></button>
+        <label>
+          <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+      </div>
+    </form>
+  {% else %}
+  <h1 class="text-center">Invalid Url!</h1>
+  <h2 class="text-center">You are already Logged In.</h2>
+  <h2 class="text-center"><a href="{% url 'myfinance:index' %}">Click Here For Home Page.</a> </h2>
+  {% endif %}
+  {% endblock %}
+</body>
+
+
+
+  
+

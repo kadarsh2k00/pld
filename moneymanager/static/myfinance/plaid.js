@@ -1,0 +1,86 @@
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  const csrftoken = getCookie("csrftoken");
+
+  const myHeaders = new Headers({
+    "Content-Type": "text/plain",
+    "X-CSRFToken": csrftoken,
+  });
+
+  // Create and return new link token, which will be passed to the configs object
+  // through async await.
+  //
+  async function linkTokenFunc() {
+    // Fetch the link token from Plaid
+    //
+    const fetchLinkToken = async () => {
+      const response = await fetch("/create_link_token", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: myHeaders,
+      });
+      const responseJSON = await response.json();
+      return responseJSON.link_token;
+    };
+
+    const configs = {
+      // 1. Pass a new link_token to Link.
+      token: await fetchLinkToken(),
+      onSuccess: async function (public_token, metadata) {
+        // 2a. Send the public_token to your app server.
+        // The onSuccess function is called when the user has successfully
+        // authenticated and selected an account to use.
+
+        await fetch("/get_access_token", {
+          method: "POST",
+          headers: myHeaders,
+          body: JSON.stringify({
+            public_token: public_token,
+            accounts: metadata.accounts,
+          }),
+        });
+      },
+      onExit: async function (err, metadata) {
+        // 2b. Gracefully handle the invalid link token error. A link token
+        // can become invalidated if it expires, has already been used
+        // for a link session, or is associated with too many invalid logins.
+        if (err != null && err.error_code === "INVALID_LINK_TOKEN") {
+          linkHandler.destroy();
+          linkHandler = Plaid.create({
+            ...configs,
+            token: await fetchLinkToken(),
+          });
+        }
+        if (err != null) {
+          // Handle any other types of errors.
+        }
+
+        window.location = "/";
+        // metadata contains information about the institution that the
+        // user selected and the most recent API request IDs.
+        // Storing this information can be helpful for support.
+      },
+    };
+
+    var linkHandler = Plaid.create(configs);
+    linkHandler.open();
+  }
+
+  document.getElementById("link-button").onclick = function () {
+    linkTokenFunc();
+  };
