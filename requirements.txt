@@ -10,3 +10,4 @@ itsdangerous==0.24
 requests==2.20.0
 plaid-python
 python-dotenv==0.15.0
+psycopg2==2.9.1
