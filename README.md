@@ -59,27 +59,27 @@ PLAID_SECRET = 'YOUR SECRET KEY'
 <h2>Work Flow</h2>
 <h3>Home Page</h3>
 <div align="center">
-    <img src="" width="100%"</img> 
+    <img src="https://github.com/kadarsh2k00/Plaid_Django_App/blob/961881a60527d14880d9882e0da5d53d1903c633/Plaid_Django_Demo/Home.png" width="100%"</img> 
 </div>
 
 <h3>Registration Page</h3>
 <div align="center">
-    <img src="" width="100%"</img> 
+    <img src="https://github.com/kadarsh2k00/Plaid_Django_App/blob/961881a60527d14880d9882e0da5d53d1903c633/Plaid_Django_Demo/SignUp.png" width="100%"</img> 
 </div>
 
 <h3>Login Page</h3>
 <div align="center">
-    <img src="" width="100%"</img> 
+    <img src="https://github.com/kadarsh2k00/Plaid_Django_App/blob/961881a60527d14880d9882e0da5d53d1903c633/Plaid_Django_Demo/LogIn.png" width="100%"</img> 
 </div>
 
 <h3>Landing Page</h3>
 <div align="center">
-    <img src="" width="100%"</img> 
+    <img src="https://github.com/kadarsh2k00/Plaid_Django_App/blob/961881a60527d14880d9882e0da5d53d1903c633/Plaid_Django_Demo/Landing.png" width="100%"</img> 
 </div>
 
 <h3>All Transactions</h3>
 <div align="center">
-    <img src="" width="100%"</img> 
+    <img src="https://github.com/kadarsh2k00/Plaid_Django_App/blob/961881a60527d14880d9882e0da5d53d1903c633/Plaid_Django_Demo/AllTransactions.png" width="100%"</img> 
 </div>
 
 <h2>Contributor</h2>
