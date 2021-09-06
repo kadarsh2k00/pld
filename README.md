@@ -17,7 +17,7 @@ Project Features:
 <code>https://dashboard.plaid.com/team/keys</code>
 
 <h2>Installing</h2>
-<h4>Open terminal in project folder to creat and run virtual environment</h4>
+<h4>Open terminal in project folder to create and run virtual environment</h4>
 <code>python -m venv ./venv</code><br>
 <code>venv\scripts\activate.bat</code><br>
 
