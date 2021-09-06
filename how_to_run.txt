@@ -10,7 +10,7 @@ You will need API keys, which you can receive by signing up in the Plaid Dashboa
 https://dashboard.plaid.com/team/keys
 
 3.Installing
-Open terminal in project folder to creat and run virtual environment
+Open terminal in project folder to create and run virtual environment
 python -m venv ./venv
 venv\scripts\activate.bat
 
