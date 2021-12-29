@@ -89,5 +89,5 @@ PLAID_SECRET = 'YOUR SECRET KEY'
 </blockquote>
 
 <div align="center">
-    <h3>====Thank You!====</h3>
+    <h3>Thank You!</h3>
 </div>
